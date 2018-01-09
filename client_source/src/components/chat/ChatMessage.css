@@ -1,0 +1,15 @@
+.ChatMessage {
+    text-align: center;
+    margin: 50px;
+}
+
+.chat-table {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.label-text {
+    width: 200px;
+    height: 25px;
+    border: 1px solid red;
+}
