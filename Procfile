@@ -1,1 +1,1 @@
-web: python manage.py runserver fairy-app.herokuapp.com:$PORT
+web: python manage.py runserver $HOST:$PORT
