@@ -1,20 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
-import ChatMessage from './components/chat/ChatMessage';
+import ChatMessagePacker from './containers/ChatMessagePacker';
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      showLoading: 'none'
-    };
-  }
-
-  setAppState(key, value) {
-    const stateObj = {};
-    stateObj[key] = value;
-    this.setState(stateObj);
   }
 
   render() {
@@ -24,13 +16,18 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div className="popWindow" style={{display: this.state.showLoading}}>
+        <div className="popWindow" style={{display: this.props.rootState.isLoading ? '' : 'none'}}>
           <img className="loading" src={require('./assets/loading.gif')}/>
         </div>
-        <ChatMessage setAppState={this.setAppState.bind(this)}></ChatMessage>
+        <ChatMessagePacker></ChatMessagePacker>
       </div>
     );
   }
 }
+
+App.propTypes = {
+  rootState: PropTypes.object,
+  showLoading: PropTypes.func
+};
 
 export default App;

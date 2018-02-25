@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './ChatMessage.css';
 import PropTypes from 'prop-types';
-
-const constant = require('../../common/constant');
+import {Constant} from '../../common/Constant';
 
 class ChatMessage extends Component {
   constructor() {
@@ -19,7 +18,7 @@ class ChatMessage extends Component {
   }
 
   getUsers() {
-    this.props.setAppState('showLoading', '');
+    this.props.showLoading(true);
     let xhr;
     if (window.XMLHttpRequest) {
       xhr = new XMLHttpRequest();
@@ -36,7 +35,8 @@ class ChatMessage extends Component {
       alert('XMLHttpRequest对象创建失败!!!');
     } else {
       const _this = this;
-      xhr.open('post', constant.api.url, true);
+      const url = (Constant.api['baseUrl'] || '') + Constant.api.usersPath;
+      xhr.open('post', url, true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           if (xhr.responseText) {
@@ -65,7 +65,9 @@ class ChatMessage extends Component {
             _this.setState({result: result});
           }
         }
-        _this.props.setAppState('showLoading', 'none');
+        if (_this.props.rootState.isLoading) {
+          _this.props.showLoading(false);
+        }
       };
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send('{"username": "' + this.state.message + '"}');
@@ -105,7 +107,8 @@ class ChatMessage extends Component {
 }
 
 ChatMessage.propTypes = {
-  setAppState: PropTypes.func
+  rootState: PropTypes.object,
+  showLoading: PropTypes.func
 };
 
 export default ChatMessage;

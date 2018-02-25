@@ -1,6 +1,0 @@
-{
-  "api": {
-    "url": "/api/users",
-    "_url": "http://localhost:8000/api/users"
-  }
-}
